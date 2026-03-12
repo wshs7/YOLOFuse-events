@@ -112,6 +112,8 @@ To run validation, use:
 
 ```bash
 python val_dual.py --data data_yaml/multi.yaml
+python val_dual.py --data data_yaml/frame.yaml
+python val_dual.py --data data_yaml/event.yaml
 ```
 
 
