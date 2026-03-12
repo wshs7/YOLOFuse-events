@@ -3,7 +3,7 @@
 This repository contains the official code for our paper:
 
 **Understanding Fundamental Modality Advantage in RGB and Event-based Hybrid Data**
-
+![image](images/abstract.png)
 This repository contains our multimodal object detection codebase built on top of [YOLOFuse](https://github.com/WangQvQ/YOLOFuse), which itself is based on the [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) framework. Our implementation extends YOLOFuse for aligned RGB-event object detection and related experiments.
 
 ## Installation
@@ -47,6 +47,8 @@ dataset_root/
     ├── val/
     └── test/              # optional
 ```
+Following the original YOLOFuse convention, `imagesIR/` is used as the folder name for the second modality. In this project, it denotes the event modality.
+
 For the frame-only or the event-only modality,the dataset should follow the structure below:
 
 ```text
@@ -92,6 +94,7 @@ After preparing the dataset and editing the YAML file, you can start training mu
 
 ```bash
 python train_multi.py --data data_yaml/multi.yaml
+python train_with_plug_in_module.py --data data_yaml/multi.yaml
 ```
 
 For the frame-only and event-only modaity, you can train with:
