@@ -6,13 +6,6 @@ This repository contains the official code for our paper:
 
 This repository contains our multimodal object detection codebase built on top of [YOLOFuse](https://github.com/WangQvQ/YOLOFuse), which itself is based on the [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) framework. Our implementation extends YOLOFuse for aligned RGB-event object detection and related experiments.
 
-
-## Overview
-
-This repository supports multimodal object detection with paired RGB and event data. The code follows a YOLO-style dataset layout and uses aligned multimodal inputs during training and validation.
-
----
-
 ## Installation
 
 Clone the repository and install it in editable mode:
