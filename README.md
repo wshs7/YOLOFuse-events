@@ -65,9 +65,8 @@ dataset_root/
     └── test/              # optional
 ```
 
----
 
-## Configure `data_yaml/`
+## Training
 
 Before running training or validation, please edit the YAML files in the `data_yaml/` directory and set the correct dataset paths.
 
@@ -91,15 +90,6 @@ test: images/test    # optional
 names:
   0: object
 ```
-
-Please modify the paths according to your local machine. Make sure that:
-
-- the dataset root is correct
-- the label files follow the standard YOLO directory structure
-
----
-
-## Training
 
 After preparing the dataset and editing the YAML file, you can start training multi-modality model with:
 
