@@ -51,7 +51,7 @@ dataset_root/
     ├── val/
     └── test/              # optional
 ```
-For the frame-only or the event-only modality,the dataset follow the structure below:
+For the frame-only or the event-only modality,the dataset should follow the structure below:
 
 ```text
 dataset_root/
