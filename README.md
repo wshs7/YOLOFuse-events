@@ -34,7 +34,7 @@ After downloading, extract the dataset to your preferred location.
 
 ## Dataset Structure
 
-The dataset should follow the structure below:
+The multimodal dataset should follow the structure below:
 
 ```text
 dataset_root/
@@ -42,7 +42,7 @@ dataset_root/
 │   ├── train/
 │   ├── val/
 │   └── test/              # optional
-├── imagesIR/              # optional event modality
+├── imagesIR/
 │   ├── train/
 │   ├── val/
 │   └── test/              # optional
@@ -51,7 +51,19 @@ dataset_root/
     ├── val/
     └── test/              # optional
 ```
+For the frame-only or the event-only modality,the dataset follow the structure below:
 
+```text
+dataset_root/
+├── images/                # frame modality or event modality
+│   ├── train/
+│   ├── val/
+│   └── test/              # optional
+└── labels/
+    ├── train/
+    ├── val/
+    └── test/              # optional
+```
 
 ---
 
