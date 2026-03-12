@@ -1,8 +1,4 @@
 <p align="center">
-  <a href="README.md">English</a>
-</p>
-
-<p align="center">
   <a href="https://github.com/WangQvQ/YOLOFuse">
     <img src="https://img.shields.io/badge/Base-YOLOFuse-blueviolet" alt="Base YOLOFuse">
   </a>
@@ -15,16 +11,6 @@
 
 This repository contains our multimodal object detection codebase built on top of [YOLOFuse](https://github.com/WangQvQ/YOLOFuse), which itself is based on the [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) framework. Our implementation extends YOLOFuse for aligned RGB-event object detection and related experiments.
 
-## Acknowledgement
-
-This project is developed based on:
-
-- [YOLOFuse](https://github.com/WangQvQ/YOLOFuse)
-- [Ultralytics YOLO](https://github.com/ultralytics/ultralytics)
-
-Please also consider citing or starring the original YOLOFuse project if you find this repository useful.
-
----
 
 ## Overview
 
