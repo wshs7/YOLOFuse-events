@@ -3,7 +3,12 @@
 This repository contains the official code for our paper:
 
 **Understanding Fundamental Modality Advantage in RGB and Event-based Hybrid Data**
-<img src="images/abstract.png" width="400">
+
+<p align="center">
+  <img src="images/abstract.png" width="400">
+  <em>Figure 1. Visualization result.</em>
+</p>
+
 This repository contains our multimodal object detection codebase built on top of [YOLOFuse](https://github.com/WangQvQ/YOLOFuse), which itself is based on the [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) framework. Our implementation extends YOLOFuse for aligned RGB-event object detection and related experiments.
 
 ## Installation
