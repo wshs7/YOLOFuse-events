@@ -2,7 +2,7 @@
 
 This repository contains the official code for our paper:
 
-**Understanding Fundamental Modality Advantage in RGB and Event-based Hybrid Data**
+**Understanding and Exploiting Fundamental Modality Advantage in Frame and Event Hybrid Visual Data**
 
 <p align="center">
   <img src="images/abstract.png" width="400">
