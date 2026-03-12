@@ -127,23 +127,6 @@ python val_dual.py --data data_yaml/multi.yaml
 ```
 
 
-## Repository Structure
-
-A typical repository structure is:
-
-```text
-[YOUR_PROJECT_NAME]/
-├── data_yaml/
-├── ultralytics/
-├── models/
-├── scripts/
-├── train_*.py
-├── val_*.py
-└── README.md
-```
-
----
-
 ## Citation
 
 If you use this repository in your research, please cite our work and also acknowledge YOLOFuse.
