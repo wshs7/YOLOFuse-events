@@ -30,10 +30,6 @@ Please download the dataset from Google Drive:
 
 After downloading, extract the dataset to your preferred location.
 
----
-
-## Dataset Structure
-
 The multimodal dataset should follow the structure below:
 
 ```text
