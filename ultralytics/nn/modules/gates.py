@@ -4,21 +4,21 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 METRIC_COLUMNS_16 = [
-    "RGB_muY", "RGB_stdY", "RGB_DR_p99_p1", "RGB_p_sat", "RGB_entropy",
-    "RGB_var_lap", "RGB_grad_mean", "RGB_colorfulness",
-    "DVS_nz_density", "DVS_int_density", "DVS_onoff_ratio", "DVS_gini",
-    "DVS_grid_cv", "DVS_entropy", "DVS_var_lap", "DVS_polar_bias",
+    "frame_muY", "frame_stdY", "frame_DR_p99_p1", "frame_p_sat", "frame_entropy",
+    "frame_var_lap", "frame_grad_mean", "frame_colorfulness",
+    "event_nz_density", "event_int_density", "event_onoff_ratio", "event_gini",
+    "event_grid_cv", "event_entropy", "event_var_lap", "event_polar_bias",
 ]
 
 METRIC_COLUMNS_8 = [
-    "RGB_muY",
-    "RGB_stdY",
-    "RGB_var_lap",
-    "RGB_grad_mean",
-    "DVS_grid_cv",
-    "DVS_int_density",
-    "DVS_polar_bias",
-    "DVS_var_lap",
+    "frame_muY",
+    "frame_stdY",
+    "frame_var_lap",
+    "frame_grad_mean",
+    "event_grid_cv",
+    "event_int_density",
+    "event_polar_bias",
+    "event_var_lap",
 ]
 
 
@@ -53,7 +53,6 @@ def _sobel_mean(x: torch.Tensor) -> torch.Tensor:
     g = torch.sqrt(gx * gx + gy * gy)
     return g.mean(dim=[1, 2, 3])
 
-import torch
 
 def _entropy_u8(x01, bins=256):
     """
@@ -114,12 +113,11 @@ def _gini(flat_nonneg: torch.Tensor) -> torch.Tensor:
 
 def _grid_cv(E01: torch.Tensor, grid: int = 16) -> torch.Tensor:
     """E01: (B,1,H,W) in [0,1]; CV over grid cells."""
-    pooled = F.adaptive_avg_pool2d(E01, (grid, grid))  # (B,1,g,g)
+    pooled = F.adaptive_avg_pool2d(E01, (grid, grid))
     cells = pooled.reshape(E01.size(0), -1)
     mean = cells.mean(dim=1)
     std = cells.std(dim=1, unbiased=False)
     return std / (mean + 1e-12)
-
 
 
 class Plugin_module(nn.Module):
@@ -149,16 +147,13 @@ class Plugin_module(nn.Module):
         )
 
         self.head_group = nn.Linear(hidden, 2)
-
         self.head_film = nn.Linear(hidden, 10)
-
         self.res_scale = nn.Parameter(torch.zeros(1))
 
         nn.init.zeros_(self.head_group.weight)
         nn.init.zeros_(self.head_group.bias)
         nn.init.zeros_(self.head_film.weight)
         nn.init.zeros_(self.head_film.bias)
-
 
     @torch.no_grad()
     def _compute_metrics_batch_full(self, img5: torch.Tensor) -> torch.Tensor:
@@ -200,27 +195,26 @@ class Plugin_module(nn.Module):
         z16 = torch.stack([
             muY, stdY, dr, psat, entY, varlp, gmean, cf,
             nz_density, int_density, onoff, gg, cvgrid, entE, varlpE, pbias
-        ], dim=1)  # (B,16)
+        ], dim=1)
 
         return z16
 
     @torch.no_grad()
     def _compute_metrics_batch(self, img5: torch.Tensor) -> torch.Tensor:
 
-        z16 = self._compute_metrics_batch_full(img5)  # (B,16)
+        z16 = self._compute_metrics_batch_full(img5)
 
-        # RGB_muY:        0
-        # RGB_stdY:       1
-        # RGB_var_lap:    5
-        # RGB_grad_mean:  6
-        # DVS_grid_cv:    12
-        # DVS_int_density:9
-        # DVS_polar_bias:15
-        # DVS_var_lap:    14
+        # frame_muY:         0
+        # frame_stdY:        1
+        # frame_var_lap:     5
+        # frame_grad_mean:   6
+        # event_grid_cv:     12
+        # event_int_density: 9
+        # event_polar_bias:  15
+        # event_var_lap:     14
         idx = [0, 1, 5, 6, 12, 9, 15, 14]
-        z8 = z16[:, idx]  # (B,8)
+        z8 = z16[:, idx]
         return z8
-
 
     def forward(self, x):
 
@@ -230,28 +224,28 @@ class Plugin_module(nn.Module):
         if len(x) < 2:
             return x
 
-        dvs = x[0]
-        rgb = x[1]
+        event = x[0]
+        frame = x[1]
 
-        B, _, H, W = dvs.shape
+        B, _, H, W = event.shape
 
-        img5 = torch.cat([dvs, rgb], dim=1)  # (B,5,H,W)
+        img5 = torch.cat([event, frame], dim=1)
 
-        fx = self.conv_block(img5)  # (B,5,H,W)
+        fx = self.conv_block(img5)
 
         z = self._compute_metrics_batch(img5).to(
-            img5.dtype).to(img5.device)  # (B,8)
+            img5.dtype).to(img5.device)
 
-        h = self.fe(z)  # (B,hidden)
+        h = self.fe(z)
 
-        group_logits = self.head_group(h)  # (B,2)
+        group_logits = self.head_group(h)
         g = torch.sigmoid(group_logits)
         g = g / (g.sum(dim=1, keepdim=True) + 1e-12)
-        alpha_dvs = g[:, 0:1].view(B, 1, 1, 1)  # (B,1,1,1)
-        alpha_rgb = g[:, 1:2].view(B, 1, 1, 1)  # (B,1,1,1)
+        alpha_event = g[:, 0:1].view(B, 1, 1, 1)
+        alpha_frame = g[:, 1:2].view(B, 1, 1, 1)
 
-        film_params = self.head_film(h)  # (B,10)
-        gamma, beta = torch.chunk(film_params, chunks=2, dim=1)  # (B,5),(B,5)
+        film_params = self.head_film(h)
+        gamma, beta = torch.chunk(film_params, chunks=2, dim=1)
 
         gamma = 1.0 + 0.1 * gamma
         beta = 0.1 * beta
@@ -259,18 +253,18 @@ class Plugin_module(nn.Module):
         gamma = gamma.view(B, 5, 1, 1)
         beta = beta.view(B, 5, 1, 1)
 
-        fx_film = gamma * fx + beta  # (B,5,H,W)
+        fx_film = gamma * fx + beta
 
-        dvs_part = fx_film[:, 0:2] * alpha_dvs  # (B,2,H,W)
-        rgb_part = fx_film[:, 2:5] * alpha_rgb  # (B,3,H,W)
-        fused = torch.cat([dvs_part, rgb_part], dim=1)  # (B,5,H,W)
+        event_part = fx_film[:, 0:2] * alpha_event
+        frame_part = fx_film[:, 2:5] * alpha_frame
+        fused = torch.cat([event_part, frame_part], dim=1)
 
-        out5 = img5 + self.res_scale * fused  # (B,5,H,W)
+        out5 = img5 + self.res_scale * fused
 
-        out_dvs = out5[:, 0:2]
-        out_rgb = out5[:, 2:5]
+        out_event = out5[:, 0:2]
+        out_frame = out5[:, 2:5]
 
         y = list(x)
-        y[0] = out_dvs
-        y[1] = out_rgb
+        y[0] = out_event
+        y[1] = out_frame
         return y

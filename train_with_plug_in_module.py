@@ -11,7 +11,7 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
 
-    model = YOLO("/home/ubuntu/桌面/YOLOFuse/ultralytics/cfg/models/fuse/Easy-level-Feature-Fusion_plug.yaml")
+    model = YOLO("ultralytics/cfg/models/fuse/Easy-level-Feature-Fusion_plug.yaml")
     model.train(
         data=args.data,
         ch=5,
