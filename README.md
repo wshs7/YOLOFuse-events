@@ -9,9 +9,6 @@
   <a href="https://github.com/ultralytics/ultralytics">
     <img src="https://img.shields.io/badge/Framework-Ultralytics%20YOLO-brightgreen" alt="Ultralytics YOLO">
   </a>
-  <a href="https://github.com/WangQvQ/YOLOFuse/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/WangQvQ/YOLOFuse" alt="License">
-  </a>
 </p>
 
 # YOLOFuse-events
