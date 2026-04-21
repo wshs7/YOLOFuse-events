@@ -121,7 +121,7 @@ When the training finishes, you should see the progress logs in your terminal si
 ```text
 Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
 100/100    19.9G    2.246      1.435      1.127          2        640: 
-Class     Images  Instances      Box(P          R      mAP50  mAP50-95)
+Class     Images  Instances    Box(P       R         mAP50     mAP50-95)
 all        100         99      0.519      0.687      0.493      0.199
 ```
 
