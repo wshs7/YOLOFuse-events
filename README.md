@@ -80,7 +80,7 @@ dataset_root/
 
 ## Training
 
-Before running training or validation, please edit the YAML files in the `data_yaml/` directory and set the correct dataset paths.
+Before running training or validation, please  **edit** the YAML files in the `data_yaml/` directory and set the correct dataset paths.
 
 A typical directory layout is:
 
@@ -130,12 +130,12 @@ all        100         99      0.519      0.687      0.493      0.199
 
 ## Validation
 
-To run validation, use (Note the path of the weights is runs/train):
+To run validation, use (Note the path of the weights is runs/train/easy-fuseX/weights/best.pt):
 
 ```bash
-python val_dual.py --data data_yaml/toy_multi.yaml --ch 5 --model /your/path/to/multi/model/pt
-python val_dual.py --data data_yaml/toy_frame.yaml --ch 3 --model /your/path/to/frame/model/pt
-python val_dual.py --data data_yaml/toy_event.yaml --ch 2 --model /your/path/to/event/model/pt
+python val_dual.py --data data_yaml/toy_multi.yaml --ch 5 --model /your/path/to/multi/weights/pt
+python val_dual.py --data data_yaml/toy_frame.yaml --ch 3 --model /your/path/to/frame/weights/pt
+python val_dual.py --data data_yaml/toy_event.yaml --ch 2 --model /your/path/to/event/weights/pt
 ```
 
 When the validation finishes, you should see the progress logs in your terminal similar to the following:
