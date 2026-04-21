@@ -12,9 +12,9 @@ This repository contains our multimodal object detection codebase built on top o
 
 The system requirements are listed in the **pyproject.toml**. 
 
-Typical installation takes approximately 1 minute on a standard desktop computer.
+Typical installation takes approximately 5 minute on a standard desktop computer.
 
-Training (Toy Dataset): Approximately 5 minutes on a standard desktop.
+Training (Toy Dataset): Approximately 10 minutes on a standard desktop.
 ## Installation
 
 Clone the repository and install it in editable mode:
@@ -27,7 +27,6 @@ conda activate yoloevents
 pip install -e .
 ```
 
-It is recommended to use a clean Python environment with the dependencies required by Ultralytics/YOLOFuse.
 
 ---
 
@@ -133,9 +132,9 @@ all        100         99      0.519      0.687      0.493      0.199
 To run validation, use (Note the path of the weights is runs/train/easy-fuseX/weights/best.pt):
 
 ```bash
-python val_dual.py --data data_yaml/toy_multi.yaml --ch 5 --model /your/path/to/multi/weights/pt
-python val_dual.py --data data_yaml/toy_frame.yaml --ch 3 --model /your/path/to/frame/weights/pt
-python val_dual.py --data data_yaml/toy_event.yaml --ch 2 --model /your/path/to/event/weights/pt
+python val_dual.py --data data_yaml/toy_multi.yaml --ch 5 --model /your/path/to/multi/weights/best.pt
+python val_dual.py --data data_yaml/toy_frame.yaml --ch 3 --model /your/path/to/frame/weights/best.pt
+python val_dual.py --data data_yaml/toy_event.yaml --ch 2 --model /your/path/to/event/weights/best.pt
 ```
 
 When the validation finishes, you should see the progress logs in your terminal similar to the following:
