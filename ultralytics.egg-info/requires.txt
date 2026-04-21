@@ -13,6 +13,8 @@ py-cpuinfo
 pandas>=1.1.4
 seaborn>=0.11.0
 ultralytics-thop>=2.0.0
+einops>=0.6.0
+tifffile>=2023.2.27
 
 [:sys_platform == "win32"]
 torch!=2.4.0,>=1.8.0

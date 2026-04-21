@@ -1,0 +1,5 @@
+path: /home/ubuntu/桌面/YOLOFuse-events/datasets/toy_frame
+train: images/train
+val: images/val
+names:
+  0: copter

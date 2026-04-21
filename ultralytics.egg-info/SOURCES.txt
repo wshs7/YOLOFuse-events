@@ -64,6 +64,7 @@ ultralytics/cfg/models/fuse/Data-level-Fusion.yaml
 ultralytics/cfg/models/fuse/Decision-level-Fusion.yaml
 ultralytics/cfg/models/fuse/Early-level-Feature-Fusion.yaml
 ultralytics/cfg/models/fuse/Easy-level-Feature-Fusion.yaml
+ultralytics/cfg/models/fuse/Easy-level-Feature-Fusion_plug.yaml
 ultralytics/cfg/models/fuse/Mid-level-Feature-Fusion.yaml
 ultralytics/cfg/models/rt-detr/rtdetr-l.yaml
 ultralytics/cfg/models/rt-detr/rtdetr-resnet101.yaml
@@ -202,6 +203,7 @@ ultralytics/nn/modules/__init__.py
 ultralytics/nn/modules/activation.py
 ultralytics/nn/modules/block.py
 ultralytics/nn/modules/conv.py
+ultralytics/nn/modules/gates.py
 ultralytics/nn/modules/head.py
 ultralytics/nn/modules/transformer.py
 ultralytics/nn/modules/utils.py

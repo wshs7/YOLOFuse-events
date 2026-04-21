@@ -16,7 +16,7 @@ if __name__ == "__main__":
         data=args.data,
         ch=5,
         imgsz=640,
-        epochs=500,
+        epochs=100, # when training the full dataset, set epochs to 500
         batch=32,
         workers=4,
         device="0",
